@@ -1,0 +1,187 @@
+	********************************************
+	IRC2.1.1 NEW GENERATION - Installation guide
+	********************************************
+
+To have more informations about this release of irc2.1.1, please
+read the README file.
+
+1. configure script
+-------------------
+
+You may run this script with arguments to tell what
+you want to compile, where to install, etc.
+
+Here are the most important parameters:
+
+	--prefix=DIR            I'll install ircd here [default=/usr/local/]
+
+	--enable-server         compilation of IRCD server
+	--enable-services       compilation of IRC Services
+	--enable-client         compilation of IRC Client
+	--enable-warnings       enable warnings during compilation (-Wall)
+	--enable-debug          enable debug
+
+You can run *./configure --help* to get more informations.
+
+2. Before compilation
+---------------------
+
+On the real irc2.1.1 release, there wasn't any configure script, and
+the configuration was done in the Makefile file, and in the struct.h
+header.
+
+Now there are only some parameters in struct.h to configure, like
+nickname length, and other useless things...
+
+However, you can edit this file to configure your ircd.
+It is in **include/** directory.
+
+3. Compilation
+--------------
+
+Just run this:
+
+	$ make
+
+You'll see a LOT of warnings, it is because in the original irc2.1.1 source,
+there isn't all **include** it may have, for the built-in functions, so
+gcc isn't happy.
+
+Note that this code is really in an old style.
+
+4. Installation
+---------------
+
+Run this command:
+
+	$ make install
+
+If the **PREFIX** given in configure script is a root path,
+please run this command as root.
+
+5. Configuration
+----------------
+
+First, go to the installation path (/usr/local/), and to the
+configuration directory (etc/).
+
+Rename the **example.conf** file to **ircd.conf**, and edit it.
+
+5.1 Introduction
+~~~~~~~~~~~~~~~~
+
+All the configuration file is described by lines which begins with
+an identifier (a letter), and all parameters are separated by
+a ':'.
+
+Comments begins with '#' character.
+
+5.1 M-Line
+~~~~~~~~~~
+
+	M:BUCSD.BU.EDU:*:Boston University Hoopy Test Server:6667
+	  \            \ \                  Port ____________/
+	   \            \ \________________ Description
+	    \            \_________________ Unused
+	     \_____________________________ Server host-name
+
+This is the server's line.
+
+5.2 A-Line
+~~~~~~~~~~
+
+	A:Boston University Computer Science:Boston, MA, USA:Bill Wisner <wisner@mica.Berkeley.EDU>
+	  \                                  \               \
+	   \                                  \               \____ Line 3
+	    \                                  \___________________ Line 2
+	     \_____________________________________________________ Line 1
+
+This is administrative informations of server. It isn't really important.
+
+5.3 I-Line
+~~~~~~~~~~
+	I:fenchurch.mit.edu:xyzzy:fenchurch.mit.edu
+	  \                 \      \
+	   \                 \      \___ Hostname/IP
+	    \                 \_________ Password
+	     \__________________________ Hostname/IP
+
+You can define a I-Line for each classes of users.
+Apparantly, the first and last fields are the sames... You
+can use wildcards.
+
+The second field can be used to ask a password to users who
+matches the line.
+
+Note that for a simple test of this server, you can add this line
+before other I-Lines:
+
+	I:*::*
+
+5.4 O-Line
+~~~~~~~~~~
+
+	O:*.bu.edu:foo:wisner
+	  \        \   \
+	   \        \   \___ Username
+	    \        \______ Password
+	     \______________ Hostmask
+
+This defines an IRC Operator.
+
+To identify yourself as ircop, use the /oper command.
+
+5.5 U-Line
+~~~~~~~~~~
+
+RTFM
+
+5.6 C/N-Line
+~~~~~~~~~~~~
+
+RTFM.
+
+6. Run Daemon
+-------------
+
+Just go into the daemon directory and type:
+
+	$ ./ircd
+
+7. Connect to your daemon
+-------------------------
+
+Launch the IRC Client with this command:
+
+	$ ./irc nickname localhost
+
+Yeah, it works!
+
+8. How to use it?
+-----------------
+
+Just use the /help command to see what you can do.
+
+Read the README file to know what is the difference
+between the last and the recent IRC protocole.
+
+9. Services
+-----------
+
+There are two services to launch, dip and gm.
+
+If you have installed them, you can launch one with
+this command:
+
+	$ ./dip DIP localhost
+or:
+	$ ./gm GM localhost
+
+Now to know what the fuck they do, read the fucking manual.
+
+10. Conclusion
+--------------
+
+It useless, but we like it.
+
+	-- Romain Bignon <romain@symlink.me>

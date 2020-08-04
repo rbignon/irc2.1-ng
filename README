@@ -1,24 +1,58 @@
-This file documents Release 2.1 (beta) of IRC
 
 
-The release consists of the source code in the top level directory.
-Other directories are:
+		Internet Relay Chat v2.1.1
+			New generation
 
+I. What the fuck?
+=================
 
-doc        documentation and installation guide
-contrib    various contributed programs
-services   various IRC services (currently wumpus and diplomacy)
+irc2.1.1 is the older ircd known, with an old version of IRC protocole,
+an installation system deprecated, etc.
 
+But it is really a part of history of the Internet, and I would try to
+do an usage version.
 
+II. What changes?
+=================
 
-Installation Note:
+Things I do in this version:
 
-     Change the SYS variable in the Makefile as appropriate and
-     do 'make config'.  The default setup is for bsd, which is
-     correct for most machines.
- 
-Note:  This release does not support simple VMS configuration.
+	* Change some things in code to port it to Linux system.
+	* Usage of auto-tools instead of an old editable Makefile.
+	* Documentation.
 
-Note:  The conf.setup script in contrib is an alternative method
-       of setting up the configuration file.
- 
+III. How to use it?
+===================
+
+Just read the INSTALL file.
+
+IV. What is changed between irc2.1.1 and ircu2.10.12 (for example)?
+===================================================================
+
+The protocole is really different between the first IRC release (this)
+and the latest ircds, like ircu, unrealircd, bahamut, etc.
+
+4.1. Channels
+-------------
+
+Now channels are named, and are prefixed by a '#', a '&' or a '+' character.
+
+Before, channels were only numbers, and you can join only one channel with
+the /channel command.
+
+To leave a channel, you must use the /channel 0 command.
+
+You can set a topic with the /topic command, and there isn't any mode.
+
+4.2. More
+---------
+
+Read the RFC to have more informations.
+
+V. Thanks to
+============
+
+Me.
+
+Contact me at <romain@symlink.me>.
+

@@ -3,7 +3,7 @@
  **
  ** This file is part of Internet Relay Chat v2.0
  **
- ** Author:           Jarkko Oikarinen 
+ ** Author:           Jarkko Oikarinen
  **         Internet: jto@tolsun.oulu.fi
  **             UUCP: ...!mcvax!tut!oulu!jto
  **           BITNET: toljto at finou
@@ -13,7 +13,7 @@
  ** All rights reserved.
  **
  ** See file COPYRIGHT in this package for full copyright.
- ** 
+ **
  *************************************************************************/
 
 char conf_id[] = "conf.c v2.0 (c) 1988 University of Oulu, Computing Center";
@@ -63,7 +63,7 @@ char *name1, *name2;
   for (; *name1 && *name2; name1++, name2++) {
     c1 = (isupper(*name1)) ? tolower(*name1) : *name1;
     c2 = (isupper(*name2)) ? tolower(*name2) : *name2;
-    if (c1 == c2) 
+    if (c1 == c2)
       continue;
     if (c1 == '?' || c2 == '?')
       continue;
@@ -83,7 +83,7 @@ char *name1, *name2;
       else
 	return(1);
    }
-#endif 
+#endif
     break;
   }
   return (*name1 != '\0' || *name2 != '\0');
@@ -93,10 +93,10 @@ aConfItem *
 find_admin()
 {
   aConfItem *aconf = conf;
-  for (; aconf; aconf = aconf->next) 
+  for (; aconf; aconf = aconf->next)
     if (aconf->status & CONF_ADMIN)
       break;
-  
+
   return (aconf);
 }
 
@@ -104,10 +104,10 @@ aConfItem *
 find_me()
 {
   aConfItem *aconf = conf;
-  for (; aconf; aconf = aconf->next) 
+  for (; aconf; aconf = aconf->next)
     if (aconf->status & CONF_ME)
       break;
-  
+
   return (aconf);
 }
 
@@ -122,8 +122,8 @@ int statmask;
   int namelen;
   if (name)
     namelen = strlen(name);
-  for (; tmp; tmp = tmp->next) 
-    if ((tmp->status & statmask) && len < HOSTLEN && !matches(tmp->host, host)) 
+  for (; tmp; tmp = tmp->next)
+    if ((tmp->status & statmask) && len < HOSTLEN && !matches(tmp->host, host))
       if (name == NULL || (!matches(tmp->name, name) && namelen < HOSTLEN))
       break;
 
@@ -182,7 +182,7 @@ initconf()
     case 'u':   /* this should connect.                  */
                 /* This is for client only, I must ignore this */
       aconf->status = CONF_SKIPME;
-      break;    
+      break;
     case 'O':   /* Operator. Line should contain at least */
     case 'o':   /* password and host where connection is  */
       aconf->status = CONF_OPERATOR;      /* allowed from */
@@ -206,13 +206,13 @@ initconf()
       continue;
     }
     if (tmp = getfield(NULL)) {
-      aconf->host = AllocString(tmp); 
+      aconf->host = AllocString(tmp);
       strcpy(aconf->host, tmp);
       if (tmp = getfield(NULL)) {
         aconf->passwd = MyMalloc(strlen(tmp)+1);
 	strcpy(aconf->passwd, tmp);
 	if (tmp = getfield(NULL)) {
-          aconf->name = AllocString(tmp); 
+          aconf->name = AllocString(tmp);
 	  strcpy(aconf->name, tmp);
 	  if (tmp = getfield(NULL)) {
 	    if ((aconf->port = atoi(tmp)) == 0)
@@ -224,7 +224,7 @@ initconf()
     if (ISMECONF(aconf)) {
       if (aconf->port > 0)
 	portnum = aconf->port;
-      if (aconf->host[0]) 
+      if (aconf->host[0])
 	CopyFixLen(myhostname,aconf->host,HOSTLEN+1);
     }
     debug(DEBUG_NOTICE, "Read Init: (%d) (%s) (%s) (%s) (%d)",

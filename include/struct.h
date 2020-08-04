@@ -51,25 +51,25 @@
 #define NOTTY    1
 
 /* Full path name of the server executable */
-#define MYNAME     "/home/rom1/ircd/irc2.1/"
+#define MYNAME     BINDIR
 
 /* Configurationfile seems to work... */
-#define CONFIGFILE "/home/rom1/ircd/irc2.1/ircd.conf"
+#define CONFIGFILE CONFDIR "ircd.conf"
 
 /* Only for irc client: default name for host to connect */
 /* Leave this undefined if client runs on same host than server */
 /* or you want to use irc.conf to define uphost... */
-#define UPHOST     "coho.ee.ubc.ca"
+#define UPHOST     "localhost"
 
 /* Path for Message of Today file. Leave this undefined if you don't */
 /* have one                                                          */
-#define MOTD "/home/rom1/ircd/irc2.1/irc.motd"
+#define MOTD CONFDIR "irc.motd"
 
 /* Port where ircd resides. NOTE: This *MUST* be greater than 1024, */
 /* if you plan to run ircd under any other uid than root. Command line */
 /* parameter port DOES NOT  affect this port, but only the port, where ircd */
 /* tries to connect, ie. the port another server uses, not the one this uses */
-#define PORTNUM 6613
+#define PORTNUM 6667
 
 /* Logfile is not in use unless you specifically say sop when starting  */
 /* ircd. It might take lots of disk space so I recommend using logfile  */

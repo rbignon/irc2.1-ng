@@ -79,7 +79,7 @@ FILE *logfile = (FILE *)0;
 int intr();
 
 #ifdef HPUX
-char logbuf[BUFSIZ]; 
+char logbuf[BUFSIZ];
 #endif
 
 #if VMS
@@ -166,6 +166,9 @@ main(argc, argv)
 	termtype = TERMCAP_TERM;
 	break;
 #endif
+      default:
+	printf(usage, argv0);
+	exit(1);
     }
     argv++; argc--;
   }
@@ -301,7 +304,7 @@ main(argc, argv)
     echo();
     nocrmode();
     endwin();
-  } 
+  }
 #endif
 #ifdef DOTERMCAP
   if (termtype == TERMCAP_TERM) {
@@ -462,11 +465,11 @@ char *line;
     return;
   }
   if (!line[1])
-    return; 
+    return;
 
   for (; cmd->name; cmd++) {
     if (!(ptr = mycncmp(&line[1], cmd->name)))
-       continue; 
+       continue;
 
     switch (cmd->type) {
       case SERVER_CMD:
@@ -539,13 +542,13 @@ char *line;
 	ch = ptr[COLS];
 	ptr[COLS] = '\0';
 	ptr2 = &ptr[COLS-1];
-      } 
+      }
 #else
       if (strlen(ptr) > COLS - 1) {
 	ch = ptr[COLS - 1];
 	ptr[COLS - 1] = '\0';
 	ptr2 = &ptr[COLS - 2];
-      } 
+      }
 #endif
       else
 	ptr2 = NULL;
@@ -674,7 +677,7 @@ char *sender;
 {
   static char name[NICKLEN + 1] = ",";
 
-  if (sender) 
+  if (sender)
     CopyFixLen(name, sender, NICKLEN+1);
 
   return (name);
@@ -686,8 +689,8 @@ char *recipient;
 {
   static char name[NICKLEN + 1] = ".";
 
-  if (recipient) 
+  if (recipient)
     CopyFixLen(name, recipient, NICKLEN+1);
-  
+
   return (name);
 }

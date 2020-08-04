@@ -3,7 +3,7 @@
  **
  ** This file is part of Internet Relay Chat v2.0
  **
- ** Author:           Jarkko Oikarinen 
+ ** Author:           Jarkko Oikarinen
  **         Internet: jto@tolsun.oulu.fi
  **             UUCP: ...!mcvax!tut!oulu!jto
  **           BITNET: toljto at finou
@@ -13,7 +13,7 @@
  ** All rights reserved.
  **
  ** See file COPYRIGHT in this package for full copyright.
- ** 
+ **
  *************************************************************************/
 
 char c_bsd_id[] = "c_bsd.c v2.0 (c) 1988 University of Oulu, Computing Center";
@@ -59,7 +59,7 @@ extern int termtype;
 	    printf("Connection refused at your own host!\n"); \
 	    printf("Rebooting IRCD Daemon and trying again....\n"); \
 	    printf("Wait a moment...\n");\
-} 
+}
 
 
 int
@@ -77,26 +77,26 @@ int portnum;
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0)
       ErrorExit("opening stream socket",1);
-    
+
     server.sin_family = AF_INET;
-    
+
     if (isdigit(*host))
 	server.sin_addr.s_addr = inet_addr(host);
-    else { 
+    else {
       if (!(hp = gethostbyname(host))) {
-	fprintf(stderr, "%s: unknown host", host);
+	fprintf(stderr, "%s: unknown host\n", host);
 	exit(2);
       }
       bcopy(hp->h_addr, &server.sin_addr, hp->h_length);
     }
     server.sin_port = htons(portnum);
-    
+
     if (connect(sock, (struct sockaddr *) &server, sizeof(server)) >= 0)
-      break; 
+      break;
 
     if (!Equal(host, me.host) || tryagain != 1)   /* Is this MY host? */
        ErrorExit("irc",1);
-    
+
     if (!fork()) {   /* - server is SUID/SGID to ME so it's my UID */
       execl(MYNAME, "ircd", (char *)0);
       exit(1);
@@ -116,7 +116,7 @@ int sock;
   char apubuf[STDINBUFSIZE+1];
   fd_set ready;
   do {
-    ready.fds_bits[0] = (1 << sock) | 1;
+    ready.__fds_bits[0] = (1 << sock) | 1;
 #ifdef DOCURSES
     if (termtype == CURSES_TERM) {
       move(LINES-1,i); refresh();
@@ -130,14 +130,14 @@ int sock;
 /*      perror("select"); */
       continue;
     }
-    if (ready.fds_bits[0] & (1 << sock)) {
+    if (ready.__fds_bits[0] & (1 << sock)) {
       if ((size = read(sock, apubuf, STDINBUFSIZE)) < 0)
 	perror("receiving stream packet");
       if (size <= 0) return(-1);
       dopacket(&me, apubuf, size);
     }
 #ifndef AUTOMATON
-    if (ready.fds_bits[0] & 1) {
+    if (ready.__fds_bits[0] & 1) {
       if ((size = read(0, apubuf, STDINBUFSIZE)) < 0) {
 	putline("FATAL ERROR: End of stdin file !");
 	return;
